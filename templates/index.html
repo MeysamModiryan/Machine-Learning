@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 sidebar">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-robot"></i> Python Assistant</h3>
+                </div>
+                
+                <div class="sidebar-content">
+                    <div class="mb-3">
+                        <h6><i class="fas fa-code"></i> Quick Actions</h6>
+                        <div class="btn-group-vertical w-100" role="group">
+                            <button class="btn btn-outline-primary btn-sm" onclick="loadSuggestion('load_csv')">
+                                <i class="fas fa-file-csv"></i> Load CSV
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm" onclick="loadSuggestion('linear_regression')">
+                                <i class="fas fa-chart-line"></i> Linear Regression
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm" onclick="loadSuggestion('data_visualization')">
+                                <i class="fas fa-chart-bar"></i> Data Visualization
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm" onclick="loadSuggestion('data_cleaning')">
+                                <i class="fas fa-broom"></i> Data Cleaning
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6><i class="fas fa-database"></i> Variables</h6>
+                        <div id="variables-list" class="variables-list">
+                            <small class="text-muted">No variables yet</small>
+                        </div>
+                        <button class="btn btn-outline-secondary btn-sm mt-2" onclick="refreshVariables()">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button class="btn btn-outline-danger btn-sm" onclick="clearSession()">
+                            <i class="fas fa-trash"></i> Clear Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9 main-content">
+                <div class="main-header">
+                    <h2><i class="fas fa-terminal"></i> Python Code Editor</h2>
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-success" onclick="executeCode()">
+                            <i class="fas fa-play"></i> Run Code
+                        </button>
+                        <button class="btn btn-outline-secondary" onclick="clearCode()">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                        <button class="btn btn-outline-info" onclick="formatCode()">
+                            <i class="fas fa-magic"></i> Format
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="code-section">
+                    <div class="code-editor-container">
+                        <textarea id="codeEditor" placeholder="Enter your Python code here..."># Welcome to Python Assistant!
+# Try some of these examples:
+
+# 1. Basic Python
+print("Hello, Python Assistant!")
+
+# 2. Data Analysis
+import pandas as pd
+import numpy as np
+
+# 3. Create sample data
+data = {'x': [1, 2, 3, 4, 5], 'y': [2, 4, 6, 8, 10]}
+df = pd.DataFrame(data)
+print(df)
+
+# 4. Simple visualization
+import matplotlib.pyplot as plt
+plt.plot(df['x'], df['y'])
+plt.title('Sample Plot')
+plt.show()</textarea>
+                    </div>
+                </div>
+                
+                <div class="output-section">
+                    <div class="output-header">
+                        <h6><i class="fas fa-terminal"></i> Output</h6>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="clearOutput()">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                    <div id="output" class="output-content">
+                        <div class="text-muted">Output will appear here...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suggestion Modal -->
+    <div class="modal fade" id="suggestionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Code Suggestion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <pre><code id="suggestionCode" class="language-python"></code></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="useSuggestion()">Use This Code</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
